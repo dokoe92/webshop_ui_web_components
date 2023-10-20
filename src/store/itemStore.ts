@@ -1,11 +1,10 @@
 
-
 class ItemStore {
-    private data = {};
+    data:any = [];
     private listeners = [];
 
     setItemData(itemData: {}) {
-        this.data = itemData;
+        this.data = (itemData);
         this.notifyAll();
     }
 
@@ -20,6 +19,9 @@ class ItemStore {
             listener(this.data)
         }
     }
+
+
+
 }
 
 const store = new ItemStore();

@@ -1,6 +1,8 @@
 import {LitElement, css, html} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, state} from 'lit/decorators.js';
+import {store} from "../store/itemStore";
 import {ItemService} from "../service/itemService";
+
 
 @customElement('items-container')
 export class ItemsContainer extends LitElement {
@@ -10,11 +12,42 @@ export class ItemsContainer extends LitElement {
     
     `;
 
+    @state()
+    private items = [];
+
+    connectedCallback() {
+        super.connectedCallback();
+        store.addListeners(this.handleStoreChange.bind(this))
+    }
+
+    handleStoreChange(newData) {
+        this.items = newData;
+    }
+
 
     // Render the UI as a function of component state
     render() {
+
+
         return html`
-            <button-component name="Pullover" @click="${() => ItemService.getAllItems('pullovers')}"></button-component>
+            ${this.items.map(item  => {
+                // @ts-ignore
+                // @ts-ignore
+                return html`
+                    <card-component 
+                            itemBrand="${item.brand}" 
+                            itemName="${item.name}"
+                            itemValue="${item.value}"
+                            itemColour="${item.colour}"
+                                        
+                    ></card-component>
+                `
+            })}
         `;
+    }
+
+    async test () {
+
+
     }
 }

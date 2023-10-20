@@ -1,3 +1,5 @@
+import {store} from "../store/itemStore";
+
 export class ItemService {
 
     static baseUrl = "http://localhost:9000";
@@ -25,8 +27,8 @@ export class ItemService {
         }
         if (requestOn != "") {
             const response =  await this.fetchItems(requestOn);
-            console.log(response);
-            return response;
+            store.setItemData(response);
+            console.log("store", store.data);
         } else {
             console.log("Please use valid path!");
         }
