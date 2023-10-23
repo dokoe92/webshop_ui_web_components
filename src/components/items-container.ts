@@ -8,8 +8,16 @@ import {ItemService} from "../service/itemService";
 export class ItemsContainer extends LitElement {
     // Define scoped styles right with your component, in plain CSS
     static styles = css`
-  
-    
+        
+        .items-container {
+          display: flex;
+          flex-wrap: wrap;
+          width: 80%;
+          justify-content: center;
+          margin: 2rem auto;
+          gap: 1rem;
+        }
+      
     `;
 
     @state()
@@ -30,18 +38,20 @@ export class ItemsContainer extends LitElement {
 
 
         return html`
-            ${this.items.map(item  => {
-                // @ts-ignore
-                // @ts-ignore
-                return html`
-                    <card-component 
-                            itemBrand="${item.brand}" 
+            <div class="items-container">
+                ${this.items.map(item  => {
+                    return html`
+                        <card-component
+                            itemBrand="${item.brand}"
                             itemName="${item.name}"
                             itemValue="${item.value}"
                             itemColour="${item.colour}"
-                                        
-                    ></card-component>
-                `
+                         >
+                        </card-component>
+                </div>
+            `
+                // @ts-ignore
+                // @ts-ignore
             })}
         `;
     }

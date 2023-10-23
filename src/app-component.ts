@@ -1,5 +1,6 @@
 import {css, html, LitElement} from "lit";
-import {customElement} from "lit/decorators.js";
+import {customElement, query} from "lit/decorators.js";
+import { Router} from "@vaadin/router";
 
 @customElement('app-component')
 export class AppComponent extends LitElement {
@@ -11,13 +12,24 @@ export class AppComponent extends LitElement {
     }
     `
 
+    @query("#content")
+    _content;
+
+    firstUpdated() {
+        const router = new Router(this._content);
+        router.setRoutes([
+            {path: "/", component: "items-container"},
+            {path: "/create-user", component: "user-creation-form"},
+        ])
+    }
+
 
 
     // Render the UI as a function of component state
     render() {
         return html`
             <search-bar></search-bar>
-            <items-container></items-container>
+            <div id="content"></div>
         `;
     }
 }

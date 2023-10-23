@@ -1,6 +1,7 @@
 import {LitElement, css, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {ItemService} from "../service/itemService";
+import {Router} from "@vaadin/router";
 
 @customElement('search-bar')
 export class SearchBar extends LitElement {
@@ -17,6 +18,7 @@ export class SearchBar extends LitElement {
         align-items: center;
         width: 5rem;
         justify-content: center;
+        height: 100%;
       }
 
       li:hover {
@@ -28,25 +30,43 @@ export class SearchBar extends LitElement {
         background-color: red;
       }
 
-      ul {
-        width: 100%;
-        height: 10vh;
+      .search-bar {
+        height: 5rem;
         background-color: black;
-        display: flex;
         gap: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
       }
+      
+      ul  {
+        height: 100%;
+      }
+      
     `;
+
+
 
     render() {
         const searchbarElements = ["Pullovers", "Shirts", "Pants", "Shoes"];
 
         return html`
-            <ul>
-                ${searchbarElements.map(item => {
-                    return html`<li @click=${() => ItemService.getAllItems(item)}>${item}</li>`
-                })}
-                
-            </ul>
+            <div class="search-bar">
+                <ul>
+
+                    ${searchbarElements.map(item => {
+                        return html`<li @click=${() => {
+                            Router.go("/")
+                            ItemService.getAllItems(item)
+                        }}>${item}</li>`
+                    })}
+                </ul>
+                <ul class="user-part">
+                    <li @click="${() => Router.go("/create-user")}">Create User</li>
+                </ul>
+            </div>
+
 
         `;
     }

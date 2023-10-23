@@ -15,7 +15,7 @@ export class CardComponent extends LitElement {
       }
       
       .card-body {
-        width: 10rem;
+        width: 12rem;
         display: flex;
  
       }
