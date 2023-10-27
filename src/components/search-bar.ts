@@ -2,6 +2,7 @@ import {LitElement, css, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {ItemService} from "../service/itemService";
 import {Router} from "@vaadin/router";
+import {UserService} from "../service/userService";
 
 @customElement('search-bar')
 export class SearchBar extends LitElement {
@@ -63,6 +64,8 @@ export class SearchBar extends LitElement {
                     })}
                 </ul>
                 <ul class="user-part">
+                    <li @click="${() => UserService.getUser()}">Find User</li>
+                    <li @click="${() => ItemService.clearShoppingCart() }">Clear Cart</li>
                     <li @click="${() => Router.go("/create-user")}">Create User</li>
                 </ul>
             </div>

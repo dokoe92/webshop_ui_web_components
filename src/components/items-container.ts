@@ -3,6 +3,13 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {store} from "../store/itemStore";
 import {ItemService} from "../service/itemService";
 
+type Item = {
+    id: string;
+    brand: string;
+    name: string;
+    value: string;
+    colour: string;
+};
 
 @customElement('items-container')
 export class ItemsContainer extends LitElement {
@@ -21,14 +28,14 @@ export class ItemsContainer extends LitElement {
     `;
 
     @state()
-    private items = [];
+    private items: Item[] = [];
 
     connectedCallback() {
         super.connectedCallback();
         store.addListeners(this.handleStoreChange.bind(this))
     }
 
-    handleStoreChange(newData) {
+    handleStoreChange(newData: Item[]) {
         this.items = newData;
     }
 
@@ -42,6 +49,7 @@ export class ItemsContainer extends LitElement {
                 ${this.items.map(item  => {
                     return html`
                         <card-component
+                            itemId="${item.id}"    
                             itemBrand="${item.brand}"
                             itemName="${item.name}"
                             itemValue="${item.value}"

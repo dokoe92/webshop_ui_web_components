@@ -1,5 +1,7 @@
 import {html, css, LitElement} from "lit";
 import {customElement, property, query} from "lit/decorators.js";
+import {UserService} from "../service/userService";
+import {ItemService} from "../service/itemService";
 
 @customElement("card-component")
 export class CardComponent extends LitElement {
@@ -38,6 +40,8 @@ export class CardComponent extends LitElement {
       
     `;
 
+    @property()
+    itemId?:number;
     @property({type: String})
     itemName?:string;
 
@@ -49,6 +53,7 @@ export class CardComponent extends LitElement {
 
     @property({type: String})
     itemBrand?: string;
+
 
 
     render() {
@@ -64,7 +69,7 @@ export class CardComponent extends LitElement {
                         <li class="item-info">${this.itemColour}</li>
                     </ul>
                 </div>
-                <button-component class="btn" name="Add to shopping cart"></button-component>
+                <button-component class="btn" name="Add to shopping cart" @click="${() => this.itemId && ItemService.addToShoppingCart(this.itemId)}"></button-component>
             </div>
         `
     }
