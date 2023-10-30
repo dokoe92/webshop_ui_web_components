@@ -1,5 +1,5 @@
 import {LitElement, css, html} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query, state} from 'lit/decorators.js';
 import {ItemService} from "../service/itemService";
 import {Router} from "@vaadin/router";
 import {UserService} from "../service/userService";
@@ -31,6 +31,11 @@ export class SearchBar extends LitElement {
         background-color: red;
       }
 
+      li.userId:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+      
       .search-bar {
         height: 5rem;
         background-color: black;
@@ -45,7 +50,25 @@ export class SearchBar extends LitElement {
         height: 100%;
       }
       
+      .userId {
+        width: 10rem;      }
+      
     `;
+
+
+    @query(".userId-input")
+    _userIdInput!: HTMLInputElement
+
+    @state()
+    userId = 0;
+
+    async handleFindUser() {
+        const inputUserId = parseInt(this._userIdInput.value);
+        if (!isNaN(inputUserId)) {
+            await UserService.getUser(inputUserId);
+            this.userId = UserService.user.userId;
+        }
+    }
 
 
 
@@ -53,19 +76,24 @@ export class SearchBar extends LitElement {
         const searchbarElements = ["Pullovers", "Shirts", "Pants", "Shoes"];
 
         return html`
+
             <div class="search-bar">
                 <ul>
 
                     ${searchbarElements.map(item => {
-                        return html`<li @click=${() => {
-                            Router.go("/")
-                            ItemService.getAllItems(item)
-                        }}>${item}</li>`
+                        return html`
+                            <li @click=${() => {
+                                Router.go("/")
+                                ItemService.getAllItems(item)
+                            }}>${item}
+                            </li>`
                     })}
                 </ul>
                 <ul class="user-part">
-                    <li @click="${() => UserService.getUser()}">Find User</li>
-                    <li @click="${() => ItemService.clearShoppingCart() }">Clear Cart</li>
+                    <li class="userId">Logged as User ID: ${this.userId}</li>
+                    <li @click="${() => this.handleFindUser()}">Find User</li>
+                    <input type="text" class="userId-input">
+                    <li @click="${() => ItemService.clearShoppingCart()}">Clear Cart</li>
                     <li @click="${() => Router.go("/create-user")}">Create User</li>
                 </ul>
             </div>

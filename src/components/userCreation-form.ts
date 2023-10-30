@@ -10,14 +10,16 @@ export class UserCreationForm extends LitElement {
 
     async createUser(e:Event) {
         e.preventDefault();
-        await UserService.createNewUser(this._username.value, this._password.value);
+        if (this._username.value != "" && this._password.value != "") {
+            await UserService.createNewUser(this._username.value, this._password.value);
+        }
     }
 
     @query(".username")
-    _username: HTMLInputElement;
+    _username!: HTMLInputElement;
 
     @query(".password")
-    _password:HTMLInputElement;
+    _password!:HTMLInputElement;
 
     render() {
         return html`

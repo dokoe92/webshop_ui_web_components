@@ -36,7 +36,6 @@ export class ItemService {
         } else {
             console.log("Please use valid path!");
         }
-
     }
 
     static async fetchItems(url: string) {
@@ -47,7 +46,7 @@ export class ItemService {
     static async addToShoppingCart(itemId: number) {
         const addItemDto = {
             itemId : itemId,
-            userId : UserService.user.id
+            userId : UserService.user.userId
         }
         const response = await fetch(ItemService.addtoShoppingCartURL, {
             method: "POST",
@@ -61,7 +60,7 @@ export class ItemService {
     }
 
     static async clearShoppingCart() {
-        const response = await fetch(ItemService.clearShoppingCartUrl + UserService.user.id, {
+        const response = await fetch(ItemService.clearShoppingCartUrl + UserService.user.userId, {
             method: "DELETE"
         }).then(data => data.json());
         console.log(response)

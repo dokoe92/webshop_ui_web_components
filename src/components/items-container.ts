@@ -45,22 +45,24 @@ export class ItemsContainer extends LitElement {
 
 
         return html`
-            <div class="items-container">
-                ${this.items.map(item  => {
-                    return html`
-                        <card-component
-                            itemId="${item.id}"    
-                            itemBrand="${item.brand}"
-                            itemName="${item.name}"
-                            itemValue="${item.value}"
-                            itemColour="${item.colour}"
-                         >
-                        </card-component>
+            <div >
+                <button>dd</button>
+                <div class="items-container">
+                    ${this.items.map(item => {
+                        return html`
+                            <card-component
+                                    itemId="${item.id}"
+                                    itemBrand="${item.brand}"
+                                    itemName="${item.name}"
+                                    itemValue="${item.value}"
+                                    itemColour="${item.colour}"
+                            >
+                            </card-component>
                 </div>
-            `
-                // @ts-ignore
-                // @ts-ignore
-            })}
+
+            </div>
+                        `
+                    })}
         `;
     }
 
